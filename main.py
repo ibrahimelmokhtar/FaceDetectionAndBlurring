@@ -14,13 +14,22 @@ while(True):
 
     # Change the original video into a gray-scaled video:
     video_gray = cv2.cvtColor(video_input, cv2.COLOR_BGR2GRAY)
-    cv2.imshow('Gray Video', video_gray)
 
     # detect faces in input video (after gray scaling):
     faces = FaceDetector.detectMultiScale(video_gray, 1.2, 5)
 
     # Print out the number of found faces:
     print(f"Faces found: {len(faces)} \t You can quit the program by pressing 'q' or 'Q'")
+
+    # now we have the (x, y) and (width, height) of all faces in input video.
+    # loop to draw a Rectangle around all faces , and put the filter around it:
+    for (x,y,w,h) in faces:
+        # (blue, green, red) => (255, 0, 0)
+        # Draw a rectangle with blue outlines:
+        cv2.rectangle(video_input, (x,y), (x+w,y+h), (255, 0, 0), 2)
+
+    # Display the video after blurring faces:
+    cv2.imshow('Live Video', video_input)
 
     # to QUIT the program: >>> press (q) OR (Q) button
     key = cv2.waitKey(1) & 0xFF
