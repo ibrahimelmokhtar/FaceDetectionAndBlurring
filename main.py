@@ -28,6 +28,15 @@ while(True):
         # Draw a rectangle with blue outlines:
         cv2.rectangle(video_input, (x,y), (x+w,y+h), (255, 0, 0), 2)
 
+        # Copy a found face from the video:
+        video_blur = video_input[y:y+h, x:x+w]
+
+        # Apply Filter on the detected face to blur it:
+        video_blur = cv2.GaussianBlur(video_blur, (31,31), 0)
+
+        # Paste the blurred face back to its original place:
+        video_input[y:y+h, x:x+w] = video_blur
+
     # Display the video after blurring faces:
     cv2.imshow('Live Video', video_input)
 
