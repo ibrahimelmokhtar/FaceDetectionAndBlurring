@@ -7,6 +7,10 @@ FaceDetector = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 # Start video capturing using the embedded camera (built-in webcam):
 capture = cv2.VideoCapture(0)
 
+# Output video meta data and format:
+fourcc = cv2.VideoWriter_fourcc('M','J','P','G')
+video_output = cv2.VideoWriter('ResultVideo.avi', fourcc, 5.0, (640, 480))
+
 # Main program: (press 'q' or 'Q' to quit)
 while(True):
     # input video:
@@ -38,6 +42,7 @@ while(True):
         video_input[y:y+h, x:x+w] = video_blur
 
     # Display the video after blurring faces:
+    video_output.write(video_input)
     cv2.imshow('Live Video', video_input)
 
     # to QUIT the program: >>> press (q) OR (Q) button
@@ -46,4 +51,6 @@ while(True):
         break
 
 # Close any open windows:
+video_output.release()
+capture.release()
 cv2.destroyAllWindows()
